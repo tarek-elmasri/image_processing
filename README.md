@@ -21,19 +21,19 @@ http://localhost:3000/api/images?filename=fjord&width=500&height=400&fit=cover&r
 
 ### Installation
 
-clone repository to your local machine and install depedencies.
+clone repository to your local machine and install dependencies.
 
 ```
-git clone git@github.com:tarek-elmasri/repo.git
+git clone git@github.com:tarek-elmasri/image_processing.git
 npm install
 npm start
 ```
 
 ### Available Scripts
 
-- start: to run production build.
-- dev: to run development server.
-- build: transpile typescript to es5.
-- lint: eslint script.
-- test: run tests.
-- prettier: formatting.
+- `start`: to run production build.
+- `dev`: to run development server.
+- `build`: transpile typescript to es5.
+- `lint`: eslint script.
+- `test`: run tests.
+- `prettier`: formatting.
