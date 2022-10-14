@@ -1,21 +1,13 @@
-import fs from 'fs';
-import { FitEnum } from 'sharp';
 import { Request, Response } from 'express';
-import {
-  generateInputPath,
-  generateOutputPath,
-  FormatEnum,
-  ImageOptions,
-  processImg,
-  ensureThumbsFolderExists,
-} from '../../utils/images';
+import { FitEnum } from 'sharp';
+import ImageService, { FormatEnum, ImageOptions } from '../../services/images';
 
 const getImage = async (req: Request, res: Response): Promise<void> => {
   try {
     // extracting supported query params
     const { filename, width, height, fit, flip, rotate, format } = req.query;
 
-    //filter query params
+    // filter query params
     const imgOptions: ImageOptions = {
       width: parseInt(width as string) || undefined,
       height: parseInt(height as string) || undefined,
@@ -25,26 +17,10 @@ const getImage = async (req: Request, res: Response): Promise<void> => {
       format: format as FormatEnum,
     };
 
-    const fileLocation = generateInputPath(filename as string);
-    const thumbLocation = generateOutputPath(filename as string, imgOptions);
-
-    // return thumb if already exists
-    const thumbExists = fs.existsSync(thumbLocation);
-    if (thumbExists) {
-      res.sendFile(thumbLocation);
-      return;
-    }
-
-    ensureThumbsFolderExists();
-
     // processing image
-    const processedFile = await processImg(
-      fileLocation,
-      thumbLocation,
-      imgOptions,
-    );
+    const thumb = await ImageService.Build(filename as string, imgOptions);
 
-    res.sendFile(processedFile);
+    res.sendFile(thumb);
   } catch (error) {
     // catch processing errors
     res.status(400).json({
