@@ -1,4 +1,5 @@
 import path from 'path';
+import fs from 'fs';
 import sharp, { FitEnum } from 'sharp';
 
 // type for supported features
@@ -22,6 +23,11 @@ const assetsPath = path.join(__dirname, '../../assets/');
 export const generateInputPath = (filename: string): string => {
   const { name, ext } = path.parse(filename);
   return path.join(assetsPath, 'full_size/', `${name + (ext || '.jpg')}`);
+};
+
+export const ensureThumbsFolderExists = () => {
+  const thumbFolder = path.normalize(assetsPath + 'thumbs');
+  fs.mkdirSync(thumbFolder, { recursive: true });
 };
 
 export const generateOutputPath = (

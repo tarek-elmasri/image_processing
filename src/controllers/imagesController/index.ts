@@ -7,6 +7,7 @@ import {
   FormatEnum,
   ImageOptions,
   processImg,
+  ensureThumbsFolderExists,
 } from '../../utils/images';
 
 const getImage = async (req: Request, res: Response): Promise<void> => {
@@ -33,6 +34,8 @@ const getImage = async (req: Request, res: Response): Promise<void> => {
       res.sendFile(thumbLocation);
       return;
     }
+
+    ensureThumbsFolderExists();
 
     // processing image
     const processedFile = await processImg(
